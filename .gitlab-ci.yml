@@ -1,0 +1,65 @@
+stages:
+  - test
+  - dev
+  - staging
+  - online
+
+variables:
+  APP_NAME: grpn-demo
+  GROUP_NAME: grpn
+  VERSION: $CI_COMMIT_REF_SLUG
+
+test:
+  image: qorzj/maven-jdk8-docker
+  stage: test
+  script:
+    - mvn -B clean install
+    - docker login -u yourName -p yourPassword yourDockerHub
+    - docker build -t yourDockerHub/$GROUP_NAME/$APP_NAME:$VERSION -f docker/Dockerfile .
+    - docker push yourDockerHub/$GROUP_NAME/$APP_NAME:$VERSION
+  only:
+    - /^feature.*/
+    - /^hotfix.*/
+    - master
+  tags:
+    - java_test
+
+dev:
+  stage: dev
+  script:
+    - docker login -u yourName -p yourPassword yourDockerHub
+    - docker-compose -f docker/compose-$CI_JOB_STAGE.yml pull
+    - docker-compose -f docker/compose-$CI_JOB_STAGE.yml down -v
+    - docker-compose -f docker/compose-$CI_JOB_STAGE.yml up -d
+  only:
+    - /^feature.*/
+    - /^hotfix.*/
+  when: manual
+  tags:
+    - universal-dev
+
+staging:
+  stage: staging
+  script:
+    - docker login -u yourName -p yourPassword yourDockerHub
+    - docker-compose -f docker/compose-$CI_JOB_STAGE.yml pull
+    - docker-compose -f docker/compose-$CI_JOB_STAGE.yml down -v
+    - docker-compose -f docker/compose-$CI_JOB_STAGE.yml up -d
+  only:
+    - /^release.*/
+  tags:
+    - universal-staging
+
+
+online:
+  stage: online
+  script:
+    - docker login -u yourName -p yourPassword yourDockerHub
+    - docker-compose -f docker/compose-$CI_JOB_STAGE.yml pull
+    - docker-compose -f docker/compose-$CI_JOB_STAGE.yml down -v
+    - docker-compose -f docker/compose-$CI_JOB_STAGE.yml up -d
+  when: manual
+  only:
+    - /^release.*/
+  tags:
+    - universal-online

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grpn.demo.mapper.OrganizationMapper">
+
+        <resultMap id="BaseResultMap" type="com.grpn.demo.domain.Organization">
+                <result column="id" property="id" />
+                <result column="create_time" property="createTime" />
+                <result column="update_time" property="updateTime" />
+                    <result column="name" property="name" />
+                    <result column="state" property="state" />
+                    <result column="main" property="main" />
+                    <result column="summary" property="summary" />
+                    <result column="logo" property="logo" />
+                    <result column="picture" property="picture" />
+                    <result column="carousel" property="carousel" />
+        </resultMap>
+
+        <sql id="Base_Column_List">
+                id,
+                create_time,
+                update_time,
+            name, state, main, summary, logo, picture, carousel
+        </sql>
+</mapper>

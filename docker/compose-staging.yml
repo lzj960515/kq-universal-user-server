@@ -1,0 +1,25 @@
+version: '3.5'
+services:
+  grpn-demo:
+    restart: always
+    image: yourDockerHub/$GROUP_NAME/$APP_NAME:$VERSION
+    container_name: $APP_NAME
+    environment:
+      SERVER_PORT: 8080
+      ACTIVE_PROFILE: $ACTIVE_PROFILE
+      JVM_XMS: -Xms640M
+      JVM_XMX: -Xmx640M
+      JVM_XMN: -Xmn384M
+      TZ: Asia/Shanghai
+    ports:
+      - 8080:8080
+    volumes:
+      - /var/log/server:/logs
+      - /var/log/server/grpn-demo/gc:/logs/grpn-demo/gc
+      - /var/log/server/grpn-demo/jvm:/logs/grpn-demo/jvm
+    networks:
+      - common
+
+networks:
+  common:
+    external: true

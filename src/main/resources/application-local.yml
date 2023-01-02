@@ -1,0 +1,45 @@
+spring:
+  flyway:
+    baseline-on-migrate: true
+    baseline-version: 1.0.0
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/grpn_demo?serverTimezone=Asia/Shanghai&useLegacyDatetimeCode=false&nullNamePatternMatchesAll=true&zeroDateTimeBehavior=CONVERT_TO_NULL&tinyInt1isBit=false&autoReconnect=true&useSSL=false&pinGlobalTxToPhysicalConnection=true&characterEncoding=utf8
+    username: root
+    password: root
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 600000
+      maximum-pool-size: 20
+      auto-commit: true
+      pool-name: DemoHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1 FROM DUAL
+  redis:
+    database: 0
+    timeout: 5000ms
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    lettuce:
+      pool:
+        min-idle: 10
+        max-idle: 50
+        max-active: 100
+        max-wait: 5000ms
+
+kq:
+  redis:
+    prefix: 'grpn:local:'
+  swagger:
+    base-package: com.grpn.demo
+    title: demo服务API
+    description: demo服务API
+  encrypt:
+    secret: 12345678qwertyui
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

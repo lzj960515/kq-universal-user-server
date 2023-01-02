@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grpn.demo.mapper.RoleAuthMapper">
+
+    <select id="selectRoleAuthTree" resultType="com.grpn.demo.vo.resp.RoleAuthTreeResp">
+        select a.id `key`, name, url, if(isnull(ra.id), 0, 1) has_auth, a.parent_id, a.weight
+        from tbl_auth  a
+                 left join  (select id, auth_id from tbl_role_auth where role_id = #{roleId}) ra on a.id = ra.auth_id
+    </select>
+</mapper>

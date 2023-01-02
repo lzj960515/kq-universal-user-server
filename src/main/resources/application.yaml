@@ -1,0 +1,22 @@
+server:
+  port: ${SERVER_PORT:8080}
+spring:
+  application:
+    name: grpn-demo
+  profiles:
+    active: ${ACTIVE_PROFILE:local}
+
+#健康检查
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+kq:
+  security:
+    token-expire-minutes: 10080
+    ignore-urls:
+      - /open/**
