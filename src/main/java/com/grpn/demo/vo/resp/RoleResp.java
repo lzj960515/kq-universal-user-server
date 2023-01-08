@@ -25,4 +25,7 @@ public class RoleResp {
 
     @YapiParameter(value = "权限树")
     private List<RoleAuthTreeResp> authTree;
+
+    @YapiParameter(value = "权限id列表", required = true)
+    private List<Long> authIds;
 }

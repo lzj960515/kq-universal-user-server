@@ -40,4 +40,11 @@ public interface RoleAuthService extends BaseService<RoleAuth> {
      * @return 权限树
      */
     List<RoleAuthTreeResp> listRoleAuthTree(Long roleId);
+
+    /**
+     * 查询权限id列表
+     * @param roleId 角色id
+     * @return 权限id列表
+     */
+    List<Long> listRoleAuthIds(Long roleId);
 }

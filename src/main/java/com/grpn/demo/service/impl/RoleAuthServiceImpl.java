@@ -10,6 +10,7 @@ import com.grpn.demo.vo.resp.RoleAuthTreeResp;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,6 +56,14 @@ public class RoleAuthServiceImpl extends BaseServiceImpl<RoleAuthMapper, RoleAut
         return toRoleAuthTree(0L, roleAuthTree);
     }
 
+    @Override
+    public List<Long> listRoleAuthIds(Long roleId) {
+        List<RoleAuth> roleAuths = super.lambdaQuery().eq(RoleAuth::getRoleId, roleId).list();
+        if(roleAuths.isEmpty()){
+            return new ArrayList<>(0);
+        }
+        return roleAuths.stream().map(RoleAuth::getAuthId).collect(Collectors.toList());
+    }
 
     private List<RoleAuthTreeResp> toRoleAuthTree(Long parentId, List<RoleAuthTreeResp> roleAuthTree) {
         return roleAuthTree.stream().filter(roleAuthTreeResp -> roleAuthTreeResp.getParentId().equals(parentId))

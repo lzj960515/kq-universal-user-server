@@ -92,6 +92,7 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
         roleResp.setState(role.getState());
         roleResp.setDataAuth(role.getDataAuth());
         // 获取权限
+        roleResp.setAuthIds(roleAuthService.listRoleAuthIds(id));
         roleResp.setAuthTree(roleAuthService.listRoleAuthTree(id));
         return roleResp;
     }
